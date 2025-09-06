@@ -1,0 +1,150 @@
+{
+  "name": "Tes webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d2eb9372-15a4-42fd-89e0-d8fe9c6ff195",
+        "authentication": "headerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "015ea4b6-2281-48a5-a069-42288f8dda29",
+      "name": "Webhook",
+      "webhookId": "d2eb9372-15a4-42fd-89e0-d8fe9c6ff195",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "El78rmnYBBqCEb7p",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.first().json.body ;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b21ae702-db59-483a-84ec-040bd054bc2b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1NcEOKa-_W8Y_vTb8QqWASedJgDwhGu6aarnrCPa0am4",
+          "mode": "list",
+          "cachedResultName": "Data Webhook",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NcEOKa-_W8Y_vTb8QqWASedJgDwhGu6aarnrCPa0am4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NcEOKa-_W8Y_vTb8QqWASedJgDwhGu6aarnrCPa0am4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nama",
+              "displayName": "Nama",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "35332fe7-3752-443b-8ff8-10b2fe603130",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "TRwAweuqQLAOMrZj",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "35b8792d-b349-4735-b82e-85d066fafac6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "75a5688c051cad50efc23f61a695e30d1d407e7eb5687482ce38ad7e6828c54c"
+  },
+  "id": "MMEQIuTPEkTjuka0",
+  "tags": []
+}
