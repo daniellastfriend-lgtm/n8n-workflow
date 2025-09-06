@@ -1,0 +1,158 @@
+{
+  "name": "Chatb0t-telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        16,
+        160
+      ],
+      "id": "072a6b5b-85c8-458c-a43b-96b8d815188e",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "nMwjadMB4ziuXeAM",
+          "name": "DeepSeek-IDN"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "kamu adalah asistant ai yang bernama jarvis. kamu adalah seorang matematika dan finansial terbaik dibidangnya"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        -32
+      ],
+      "id": "2cbd56c8-26d0-4631-a625-8ce280161780",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -128,
+        -32
+      ],
+      "id": "96bb6bbb-2e9e-4a26-8af4-d4baeaf0eb90",
+      "name": "Telegram Trigger",
+      "webhookId": "46c67627-96aa-4de0-9461-4ca94e1fa556",
+      "credentials": {
+        "telegramApi": {
+          "id": "JWBpl4vSMZIFRdbT",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        -32
+      ],
+      "id": "26e48495-6bf3-49eb-9c5e-00701c2d74bf",
+      "name": "Send a text message",
+      "webhookId": "0cf07f79-9ff5-43b4-9bcc-019a066a8f11",
+      "credentials": {
+        "telegramApi": {
+          "id": "JWBpl4vSMZIFRdbT",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.chat.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        128,
+        139.43696511002395
+      ],
+      "id": "91e068c4-5d7a-4ef0-81df-5d81c9fd9854",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "18008f32-53be-4828-9d31-5aca496bb50b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "75a5688c051cad50efc23f61a695e30d1d407e7eb5687482ce38ad7e6828c54c"
+  },
+  "id": "tyDt6Rv5HezWxU8p",
+  "tags": []
+}
